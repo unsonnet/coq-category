@@ -36,3 +36,25 @@ Defined.
 (* TODO:// make embeddings*)
 (* TODO:// define naturality*)
 (* TODO:// state yolenda lemma*)
+
+ Inductive Z_1 : Type :=
+    | M 
+    | N.
+
+Inductive HomZ1 : Z_1 -> Z_1 -> Type :=
+    | Homid1 (n: Z_1): HomZ1 n n
+    | HomMN : HomZ1 M N
+    | HomCom (x y z: Z_1) (f : HomZ1 y z) (g : HomZ1 x y) : HomZ1 x z.
+
+Definition idZ1 (x : Z_1) : HomZ1 x x :=
+    Homid1 x.
+
+Definition compZ1 (x y z : Z_1) (f : HomZ1 y z) (g : HomZ1 x y) : HomZ1 x z :=
+    HomCom x y z f g.
+
+#[export] Instance Z1_C : Category Z_1 HomZ1 Homid1 HomCom.
+Proof.
+    (* constructor. repeat intros []. reflexivity. *)
+    constructor.
+    - intros. rewrite <- f.     
+Defined.
